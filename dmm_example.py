@@ -20,17 +20,27 @@
 #  
 
 import pt3430
+from time import sleep
 
 def main(args):
-	dmm = pt3430.pt3430Instrument('COM9')
-	if dmm.isConnected == True:
-		print(dmm.getValue())
-		print(dmm.getValueString())
-		print(dmm.status)
-		dmm.close()
-	
-	return 0
+        dmm = pt3430.pt3430Instrument('/dev/tty.usbserial-0001')
+        if dmm.isConnected == True:
+                for reading in range(5):
+                        print('-------------------------------------')
+                        print(f'Starting Reading {reading+1}')
+                        print(f'Reading {reading+1} Value:\t{dmm.getValue()}V')
+                        sleep(1)
+                #print(dmm.getValueString())
+                #print(dmm.status)
+                dmm.close()
+        else:
+                print('Failed to read device')
+        return 0
 
-if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+import sys
+sys.exit(main(sys.argv))
+
+for index, byte in enumerate(string):
+        hexadecimal = format(ord(byte), "#04x")
+        binary = format(ord(byte),"#010b")
+        print(f'Byte {index}: \t{hexadecimal}\t{binary}')
